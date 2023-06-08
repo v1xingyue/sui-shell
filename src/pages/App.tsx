@@ -107,7 +107,7 @@ function App() {
           onConnectError={(error) => {
             if (error.code === ErrorCode.WALLET__CONNECT_ERROR__USER_REJECTED) {
               console.warn(
-                "user rejected the connection to " + error.details?.wallet
+                `user rejected the connection to  ${error.details?.wallet}`
               );
             } else {
               console.warn("unknown connect error: ", error);
@@ -142,7 +142,7 @@ function App() {
                 wallet publicKey: {uint8arrayToHex(wallet.account?.publicKey)}
               </p>
             </div>
-            <div className={"btn-group"} style={{ margin: "8px 0" }}>
+            <div className="btn-group" style={{ margin: "8px 0" }}>
               {nftContractAddr && (
                 <button onClick={() => handleExecuteMoveCall(nftContractAddr)}>
                   Mint {chainName(wallet.chain?.id)} NFT
