@@ -1,0 +1,10 @@
+[package]
+name = "sui_shell"
+version = "0.0.1"
+
+[dependencies]
+Sui = {local="../../sui/crates/sui-framework/packages/sui-framework"}
+
+[addresses]
+sui_shell =  "0x0"
+sui =  "0x2"

@@ -1,0 +1,12 @@
+node_modules/*
+package-lock.json
+yarn.lock
+.next
+move/build/*
+move/sui.log.*
+.env.local
+*/build/sui.log.*
+.DS_Store
+Move.lock
+yarn-error.log
+*.tsbuildinfo
