@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import "./index.css";
 
 import { WalletProvider } from "@suiet/wallet-kit";
+import { PackageLink } from "./utils";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
@@ -19,17 +20,15 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
               <Link to="/hello">Hello</Link>
             </li>
             <li>
-              <Link to="">Contract On Explorer</Link>
+              <Link target="_blank" to={PackageLink()}>
+                Contract On Explorer
+              </Link>
             </li>
           </ul>
         </nav>
         <Routes>
-          <Route path="/" element={<App />}>
-            Home
-          </Route>
-          <Route path="/hello" element={<Hello />}>
-            hello
-          </Route>
+          <Route path="/" element={<App />} />
+          <Route path="/hello" element={<Hello />} />
         </Routes>
       </BrowserRouter>
     </WalletProvider>

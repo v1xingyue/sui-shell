@@ -10,3 +10,4 @@ move/sui.log.*
 Move.lock
 yarn-error.log
 *.tsbuildinfo
+dist/*
