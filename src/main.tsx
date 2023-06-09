@@ -14,7 +14,7 @@ const Root = () => {
           <Navbar />
           <Routes>
             <Route path="/" element={<App />} />
-            <Route path="/hello" element={<Hello />} />
+            <Route path="/hello/:id" element={<Hello />} />
             <Route path="/server" element={<Server />} />
             <Route path="/client" element={<Client />} />
           </Routes>
