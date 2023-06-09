@@ -3,8 +3,9 @@ module sui_shell::server {
     use sui::object::{Self,UID,ID};
     use sui::transfer;
     use sui::tx_context::{Self, TxContext};
-    use sui_shell::member::{MemberInfo};
+    use sui_shell::member::{MemberInfo,GlobalInfo,add_server_id};
     use sui::table::{Self,Table};
+    
 
     const E_Applyed:u64 = 1;
     const E_CapNotPaired:u64 = 2;
@@ -36,15 +37,22 @@ module sui_shell::server {
         _curent = status;
     }
 
-    entry fun register_server(name:vector<u8>,description:vector<u8>,ctx:&mut TxContext){
+    entry fun register_server(name:vector<u8>,description:vector<u8>,global_info:&mut GlobalInfo,ctx:&mut TxContext){
         let call_address = tx_context::sender(ctx);
-        transfer::transfer(ServerPubInfo{
+        let server_info = ServerPubInfo{
             id:object::new(ctx),
             name,
             description,
             owner:call_address,
             member_acl:table::new(ctx)
+        };
+        let server_id = object::id(&server_info);
+        transfer::transfer(ServerAdminCap{
+            id:object::new(ctx),
+            server_info_id:server_id,
         },call_address);
+        transfer::share_object(server_info);
+        add_server_id(server_id,global_info);   
     }
 
     entry fun apply_server(server: &mut ServerPubInfo,member: &MemberInfo){

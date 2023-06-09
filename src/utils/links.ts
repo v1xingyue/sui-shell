@@ -17,3 +17,7 @@ export const PackageLink = () => {
 export const CallTarget = (module:string,name:string)=>{
     return `${SUI_PACKAGE}::${module}::${name}`;
 }
+
+export const StructType = (module:string,name:string)=>{
+  return `${SUI_PACKAGE}::${module}::${name}`;
+}

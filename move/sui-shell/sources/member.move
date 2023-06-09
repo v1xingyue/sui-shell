@@ -1,6 +1,6 @@
 module sui_shell::member {
 
-    use sui::object::{Self,UID};
+    use sui::object::{Self,UID,ID};
     use sui::transfer;
     use sui::tx_context::{Self, TxContext};
     use sui::table::{Self,Table};
@@ -14,7 +14,8 @@ module sui_shell::member {
     struct GlobalInfo has key {
         id:UID,
         name_no_table: Table<vector<u8>,u64>,
-        all_member_addresses: Table<address,bool>
+        all_member_addresses: Table<address,bool>,
+        all_servers:Table<ID,bool>
     }
 
     struct MemberInfo has key {
@@ -33,6 +34,7 @@ module sui_shell::member {
                 id:object::new(ctx),
                 name_no_table:table::new(ctx),
                 all_member_addresses: table::new(ctx),
+                all_servers: table::new(ctx),
             }
         );
         transfer::transfer(MemberAdminCap{
@@ -50,6 +52,10 @@ module sui_shell::member {
             table::add(&mut global_info.name_no_table,name,idx);
         };
         idx
+    }
+
+    public fun add_server_id(server_id:ID,global_info:&mut GlobalInfo){
+        table::add(&mut global_info.all_servers,server_id,true);
     }
 
     entry fun register(global_info:&mut GlobalInfo,name:vector<u8>,clock: &Clock,ctx:&mut TxContext){
