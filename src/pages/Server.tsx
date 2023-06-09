@@ -54,6 +54,7 @@ const Server = () => {
             id: fields.id.id,
             name: TryDecodeString(fields.name),
             description: TryDecodeString(fields.description),
+            member_acl: fields.member_acl.fields.id.id,
           };
         });
 
@@ -116,24 +117,41 @@ const Server = () => {
     <>
       <p>{JSON.stringify(chain)}</p>
 
-      {servers.map((server: any) => {
-        return (
-          <div key={server.id} className="mt-3 ">
-            <ul>
-              <li>
-                Name: <a href={ObjectLink(server.id)}> {server.name} </a>
-              </li>
-              <li>Name: {server.description}</li>
-              <button
-                onClick={() => applyUsage(server.id)}
-                className="btn btn-info"
-              >
-                Apply for usage
-              </button>
-            </ul>
-          </div>
-        );
-      })}
+      <div className="ml-3">
+        {servers.map((server: any) => {
+          return (
+            <div key={server.id} className="mt-3 ">
+              <ul>
+                <li>
+                  <a
+                    className="link link-info"
+                    href={ObjectLink(server.id)}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {server.name}
+                  </a>
+                </li>
+                <li>description: {server.description}</li>
+                <li>
+                  <a
+                    className="link link-info"
+                    href={`/hello/${server.member_acl}`}
+                  >
+                    ACL : {server.member_acl}
+                  </a>
+                </li>
+                <button
+                  onClick={() => applyUsage(server.id)}
+                  className="btn btn-info"
+                >
+                  Apply for usage
+                </button>
+              </ul>
+            </div>
+          );
+        })}
+      </div>
 
       <div className="card w-5/12 bg-base-100 shadow-xl m-3">
         <div className="card-title">Register New server:</div>

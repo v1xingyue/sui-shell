@@ -20,9 +20,15 @@ const Navbar = () => {
           <li>
             <a href="/client">Client</a>
           </li>
-          {/* <li tabIndex={0}>
+
+          <li>
+            <a href={PackageLink()} target="_blank" rel="noreferrer">
+              Contract On Explorer
+            </a>
+          </li>
+          <li tabIndex={0}>
             <details>
-              <summary>Parent</summary>
+              <summary>...</summary>
               <ul className="p-2">
                 <li>
                   <a>Submenu 1</a>
@@ -32,11 +38,6 @@ const Navbar = () => {
                 </li>
               </ul>
             </details>
-          </li> */}
-          <li>
-            <a href={PackageLink()} target="_blank" rel="noreferrer">
-              Contract On Explorer
-            </a>
           </li>
         </ul>
       </div>
