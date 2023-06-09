@@ -1,38 +1,35 @@
-import {
-  JsonRpcProvider,
-  devnetConnection,
-  mainnetConnection,
-  testnetConnection,
-} from "@mysten/sui.js";
-import { useWallet, SuiChainId } from "@suiet/wallet-kit";
-import { useEffect } from "react";
+import { useWallet } from "@suiet/wallet-kit";
+import { JsonRpcProvider, devnetConnection } from "@mysten/sui.js";
+import { useEffect, useState } from "react";
 import { GlobalID } from "../utils/const";
 
 const Server = () => {
-  const { address, chain } = useWallet();
-  let connection = devnetConnection;
-  if (chain?.id === SuiChainId.TEST_NET) {
-    connection = testnetConnection;
-  } else if (chain?.id === SuiChainId.MAIN_NET) {
-    connection = mainnetConnection;
-  }
+  const { chain } = useWallet();
+  const [global, updateGlobal] = useState({});
+  const provider = new JsonRpcProvider(devnetConnection);
 
   useEffect(() => {
-    (async () => {
-      const provider = new JsonRpcProvider(connection);
-      console.log("get data from :", GlobalID, connection);
-      const global = await provider.getObject({
+    const asyncCall = async () => {
+      const result = await provider.getObject({
         id: GlobalID,
+        options: {
+          showType: true,
+          showContent: true,
+          showDisplay: true,
+        },
       });
-      console.log(global);
-      // if (global.error) {
-      //   alert(global.error);
-      // }
-      // console.log("global info ", global);
-    })();
-  }, [address]);
+      console.log(result);
+      updateGlobal(result);
+    };
+    asyncCall();
+  }, []);
 
-  return <>{address}</>;
+  return (
+    <>
+      <p>{JSON.stringify(chain)}</p>
+      <p>{JSON.stringify(global, null, 2)}</p>
+    </>
+  );
 };
 
 export default Server;

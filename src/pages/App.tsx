@@ -1,47 +1,17 @@
 import { useAccountBalance, useWallet, formatSUI } from "@suiet/wallet-kit";
 import "@suiet/wallet-kit/style.css";
-// import { TransactionBlock } from "@mysten/sui.js";
-// import { useMemo } from "react";
+import { GlobalID } from "../utils/const";
+import { ObjectLink } from "../utils";
 
 function App() {
   const wallet = useWallet();
   const { balance } = useAccountBalance();
-  // const nftContractAddr = useMemo(() => {
-  //   if (!wallet.chain) return "";
-  //   return sampleNft.get(wallet.chain.id) ?? "";
-  // }, [wallet]);
 
   function uint8arrayToHex(value: Uint8Array | undefined) {
     if (!value) return "";
     // @ts-ignore
     return value.toString("hex");
   }
-
-  // async function handleExecuteMoveCall(target: string | undefined) {
-  //   if (!target) return;
-
-  //   try {
-  //     const tx = new TransactionBlock();
-  //     tx.moveCall({
-  //       target: target as any,
-  //       arguments: [
-  //         tx.pure("Suiet NFT"),
-  //         tx.pure("Suiet Sample NFT"),
-  //         tx.pure(
-  //           "https://xc6fbqjny4wfkgukliockypoutzhcqwjmlw2gigombpp2ynufaxa.arweave.net/uLxQwS3HLFUailocJWHupPJxQsli7aMgzmBe_WG0KC4"
-  //         ),
-  //       ],
-  //     });
-  //     const resData = await wallet.signAndExecuteTransactionBlock({
-  //       transactionBlock: tx,
-  //     });
-  //     console.log("executeMoveCall success", resData);
-  //     alert("executeMoveCall succeeded (see response in the console)");
-  //   } catch (e) {
-  //     console.error("executeMoveCall failed", e);
-  //     alert("executeMoveCall failed (see response in the console)");
-  //   }
-  // }
 
   async function handleSignMsg() {
     try {
@@ -66,13 +36,24 @@ function App() {
   return (
     <div className="card">
       <div className="card-body">
-        <h1>sui-shell manager</h1>
+        <h1>sui-shell manager </h1>
+        <p>
+          Global :{" "}
+          <a
+            className="font-bold link-hover link-success"
+            href={ObjectLink(GlobalID)}
+            target="_blank"
+            rel="noreferrer"
+          >
+            {GlobalID}
+          </a>
+        </p>
         <div className="card">
           {!wallet.connected ? (
             <p>Connect DApp with Suiet wallet from now!</p>
           ) : (
             <div>
-              <div className="text-xl">
+              <div>
                 <p>current wallet: {wallet.adapter?.name}</p>
                 <p>
                   wallet status:{" "}

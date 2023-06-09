@@ -18,7 +18,7 @@ const Navbar = () => {
             <a href="/server">Server</a>
           </li>
           <li>
-            <a href="/server">Client</a>
+            <a href="/client">Client</a>
           </li>
           {/* <li tabIndex={0}>
             <details>
