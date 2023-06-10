@@ -136,7 +136,7 @@ const Server = () => {
                 <li>
                   <a
                     className="link link-info"
-                    href={`/hello/${server.member_acl}`}
+                    href={`/acl/${server.member_acl}/${server.id}`}
                   >
                     ACL : {server.member_acl}
                   </a>

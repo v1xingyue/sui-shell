@@ -1,4 +1,4 @@
 export const SUI_PACKAGE =
-  "0x152a157d43ab138ed577d5b062a4d0851dfacf723a9285bdfac83814074d18fe";
-export const GlobalID = "0x0b9dcea2266a663e5f7022777f398887359350fcc5d87e9f398e0bcd1fdfff5f";
+  "0x5d1ad422e81b32f5850697357c25d07aa0a3d542f229d95af9e1b2eaca26b9a3";
+export const GlobalID = "0xe4a768b9e6aabc152bb4de4da8fd90cc6d2fff18f233a5795b2fbd960f0e16f2";
 export const NETWORK = "devnet";

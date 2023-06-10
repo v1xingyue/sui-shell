@@ -32,9 +32,9 @@ module sui_shell::server {
         cap.server_info_id == object::id(server)
     }
 
-    fun update_server_member_status(status:&mut u8,server: &mut ServerPubInfo,member_info_address:address) {
+    fun update_server_member_status(status:u8,server: &mut ServerPubInfo,member_info_address:address) {
         let _curent = table::borrow_mut(&mut server.member_acl,member_info_address);
-        _curent = status;
+        *_curent = status;
     }
 
     entry fun register_server(name:vector<u8>,description:vector<u8>,global_info:&mut GlobalInfo,ctx:&mut TxContext){
@@ -65,14 +65,14 @@ module sui_shell::server {
         assert!(cap_server_paired(cap, server),E_CapNotPaired);
         let member_info_address = object::id_to_address(&object::id(member));
         assert!(table::contains(&server.member_acl,member_info_address),E_NotApplyed);
-        update_server_member_status(&mut StatusNormal,server,member_info_address);
+        update_server_member_status(StatusNormal,server,member_info_address);
     }
 
     entry fun forbidden_member(cap: &ServerAdminCap, server: &mut ServerPubInfo,member: &MemberInfo){
         assert!(cap_server_paired(cap, server),E_CapNotPaired);
         let member_info_address = object::id_to_address(&object::id(member));
         assert!(table::contains(&server.member_acl,member_info_address),E_NotApplyed);
-        update_server_member_status(&mut StatusForbidden,server,member_info_address);
+        update_server_member_status(StatusForbidden,server,member_info_address);
     }
 
 }
