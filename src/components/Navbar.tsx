@@ -1,5 +1,3 @@
-// import { PackageLink } from "../utils";
-
 import { useWallet, ConnectButton, ErrorCode } from "@suiet/wallet-kit";
 import { PackageLink } from "../utils";
 
@@ -21,17 +19,14 @@ const Navbar = () => {
             <a href="/client">Client</a>
           </li>
 
-          <li>
-            <a href={PackageLink()} target="_blank" rel="noreferrer">
-              Contract On Explorer
-            </a>
-          </li>
           <li tabIndex={0}>
             <details>
-              <summary>...</summary>
+              <summary>more</summary>
               <ul className="p-2">
                 <li>
-                  <a>Submenu 1</a>
+                  <a href={PackageLink()} target="_blank" rel="noreferrer">
+                    Contract On Explorer
+                  </a>
                 </li>
                 <li>
                   <a>Submenu 2</a>
