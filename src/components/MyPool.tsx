@@ -18,6 +18,7 @@ const MyPool = () => {
   const [amount, updateAmounut] = useState(1000 * 1000 * 100);
   const [addAmount, updateAddAmounut] = useState(1000 * 1000 * 100);
   const [transferInput, updateTransferInput] = useState("");
+  const [operatePool, upadteOperatePool] = useState<any>({});
   const provider = SuiProvider();
   useEffect(() => {
     const asyncAction = async () => {
@@ -86,10 +87,40 @@ const MyPool = () => {
     console.log(result);
   };
 
+  type WalletData = { address: string; amount: number };
+
+  const parseWalletData = (input: string): WalletData[] => {
+    const regex = /^([^,\n]+),([0-9.]+)$/gm;
+    const matches = [...input.matchAll(regex)];
+
+    return matches
+      .filter((match) => match[0].trim() !== "") // ignore empty lines
+      .map((match) => ({
+        address: match[1].trim(),
+        amount: parseFloat(match[2].trim()),
+      }));
+  };
+
   const doTransfer = async () => {
     updateDisplay(false);
     console.log(`you will do transfer as this list : ${transferInput}`);
+
+    const transferItems = parseWalletData(transferInput);
+
     const tx = new TransactionBlock();
+
+    transferItems.forEach((item) => {
+      tx.moveCall({
+        target: CallTarget("coin_pool", "withdraw_to_address") as any,
+        typeArguments: [coinType],
+        arguments: [
+          tx.pure(item.amount),
+          tx.pure(item.address),
+          tx.pure(operatePool.id as string),
+        ],
+      });
+    });
+
     const result = await signAndExecuteTransactionBlock({
       transactionBlock: tx as any,
     });
@@ -179,7 +210,10 @@ const MyPool = () => {
                   , {CoinNameFromBalance(pool.coinType)}, {pool.balance}
                   <button
                     className="btn btn-success ml-3"
-                    onClick={() => updateDisplay(true)}
+                    onClick={() => {
+                      upadteOperatePool(pool);
+                      updateDisplay(true);
+                    }}
                   >
                     SendTo
                   </button>
