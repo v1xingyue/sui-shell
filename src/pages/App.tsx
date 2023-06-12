@@ -1,6 +1,6 @@
 import { useAccountBalance, useWallet, formatSUI } from "@suiet/wallet-kit";
 import { GlobalID } from "../utils/const";
-import { Signer } from "../components";
+import { Signer, MyPool } from "../components";
 import { AddressLink, BytesToHex, ObjectLink } from "../utils";
 
 const App = () => {
@@ -55,8 +55,9 @@ const App = () => {
               })}{" "}
               SUI
             </p>
-
             <Signer />
+            <div className="divider">Coin Pool</div>
+            <MyPool />
           </div>
         </div>
       )}

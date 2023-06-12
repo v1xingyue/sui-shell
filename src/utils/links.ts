@@ -25,3 +25,9 @@ export const CallTarget = (module:string,name:string)=>{
 export const StructType = (module:string,name:string)=>{
   return `${SUI_PACKAGE}::${module}::${name}`;
 }
+
+export const CoinNameFromBalance = (addr:string)=>{
+  const regex = /<(.+?)>/;
+  const match = addr.match(regex);
+  return match ? match[1] : '';
+}
