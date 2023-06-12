@@ -11,11 +11,13 @@ import {
 import { TransactionBlock } from "@mysten/sui.js";
 
 const MyPool = () => {
+  const [display, updateDisplay] = useState(false);
   const { address, signAndExecuteTransactionBlock } = useWallet();
   const [pools, updatePools] = useState<Array<any>>([]);
   const [coinType, updateCoinType] = useState("0x2::sui::SUI");
   const [amount, updateAmounut] = useState(1000 * 1000 * 100);
   const [addAmount, updateAddAmounut] = useState(1000 * 1000 * 100);
+  const [transferInput, updateTransferInput] = useState("");
   const provider = SuiProvider();
   useEffect(() => {
     const asyncAction = async () => {
@@ -84,10 +86,57 @@ const MyPool = () => {
     console.log(result);
   };
 
-  const sendToUsers = async () => {};
+  const doTransfer = async () => {
+    updateDisplay(false);
+    console.log(`you will do transfer as this list : ${transferInput}`);
+    const tx = new TransactionBlock();
+    const result = await signAndExecuteTransactionBlock({
+      transactionBlock: tx as any,
+    });
+    console.log(result);
+  };
 
   return (
     <>
+      <dialog className={display ? "modal modal-open " : "modal"}>
+        <form method="dialog" className="modal-box w-11/12 max-w-5xl">
+          <button
+            onClick={() => updateDisplay(false)}
+            className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+          >
+            ✕
+          </button>
+
+          <h3 className="font-bold text-lg">Transfer user details : </h3>
+          <p className="py-4">each line for one transfer item. example : </p>
+          <p className="py-4">
+            <b>
+              0x8bdb9075dd5bc3eba5bdde18163280ceb81adbe7761b513f40136d5e6b7bbc0f,123
+            </b>
+          </p>
+          <div>
+            <textarea
+              value={transferInput}
+              onChange={(e) => {
+                updateTransferInput(e.target.value);
+              }}
+              className="textarea textarea-bordered h-72 w-full mt-3"
+              placeholder="transfer input"
+            />
+          </div>
+          <div className="modal-action">
+            <div>
+              <button
+                className="btn btn-secondary"
+                onClick={() => doTransfer()}
+              >
+                Do Transfer!!!
+              </button>
+            </div>
+          </div>
+        </form>
+      </dialog>
+
       <div className="mt-1">
         <input
           readOnly
@@ -130,7 +179,7 @@ const MyPool = () => {
                   , {CoinNameFromBalance(pool.coinType)}, {pool.balance}
                   <button
                     className="btn btn-success ml-3"
-                    onClick={sendToUsers}
+                    onClick={() => updateDisplay(true)}
                   >
                     SendTo
                   </button>
