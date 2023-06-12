@@ -6,6 +6,10 @@ export const TransacitonLink = (digest: string, module: string) => {
   return `${ExplorerBase}/txblock/${digest}?module=${module}&network=${NETWORK}`;
 };
 
+export const AddressLink = (objectId: string) => {
+  return `${ExplorerBase}/address/${objectId}?network=${NETWORK}`;
+};
+
 export const ObjectLink = (objectId: string) => {
   return `${ExplorerBase}/object/${objectId}?network=${NETWORK}`;
 };

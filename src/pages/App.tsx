@@ -1,30 +1,11 @@
 import { useAccountBalance, useWallet, formatSUI } from "@suiet/wallet-kit";
 import { GlobalID } from "../utils/const";
-import { BytesToHex, ObjectLink } from "../utils";
+import { Signer } from "../components";
+import { AddressLink, BytesToHex, ObjectLink } from "../utils";
 
 const App = () => {
   const wallet = useWallet();
   const { balance } = useAccountBalance();
-
-  const handleSignMsg = async () => {
-    try {
-      const msg = "Hello world!";
-      const msgBytes = new TextEncoder().encode(msg);
-      const result = await wallet.signMessage({
-        message: msgBytes,
-      });
-      const verifyResult = wallet.verifySignedMessage(result);
-      console.log("verify signedMessage", verifyResult);
-      if (!verifyResult) {
-        alert(`signMessage succeed, but verify signedMessage failed`);
-      } else {
-        alert(`signMessage succeed, and verify signedMessage succeed!`);
-      }
-    } catch (e) {
-      console.error("signMessage failed", e);
-      alert("signMessage failed (see response in the console)");
-    }
-  };
 
   return (
     <>
@@ -54,7 +35,17 @@ const App = () => {
                 ? "connected"
                 : "disconnected"}
             </p>
-            <p>wallet address: {wallet.account?.address}</p>
+            <p>
+              wallet address:
+              <a
+                className="font-bold link-hover link-info"
+                target="_blank"
+                rel="noreferrer"
+                href={AddressLink(wallet.account?.address as string)}
+              >
+                {wallet.account?.address}
+              </a>
+            </p>
             <p>current network: {wallet.chain?.name}</p>
             <p>wallet publicKey: {BytesToHex(wallet.account?.publicKey)}</p>
             <p>
@@ -65,11 +56,7 @@ const App = () => {
               SUI
             </p>
 
-            <div className="btn-group" style={{ margin: "8px 0" }}>
-              <button className="btn btn-primary ml-2" onClick={handleSignMsg}>
-                signMessage
-              </button>
-            </div>
+            <Signer />
           </div>
         </div>
       )}

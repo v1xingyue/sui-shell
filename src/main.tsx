@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import Navbar from "./components/Navbar";
+import { Navbar } from "./components";
 import { App, Hello, Server, Client, Acl } from "./pages";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./index.css";
