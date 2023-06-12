@@ -75,7 +75,7 @@ const MyPool = () => {
     tx.moveCall({
       target: CallTarget("coin_pool", "add_coin") as any,
       typeArguments: [coinType],
-      arguments: [tx.gas, tx.pure(amount), tx.pure(poolId)],
+      arguments: [tx.gas, tx.pure(addAmount), tx.pure(poolId)],
     });
     // console.log(tx);
     const result = await signAndExecuteTransactionBlock({
