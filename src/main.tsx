@@ -12,13 +12,16 @@ const Root = () => {
       <WalletProvider>
         <BrowserRouter>
           <Navbar />
-          <Routes>
-            <Route path="/" element={<App />} />
-            <Route path="/acl/:tableId/:serverId" element={<Acl />} />
-            <Route path="/hello/:id" element={<Hello />} />
-            <Route path="/server" element={<Server />} />
-            <Route path="/client" element={<Client />} />
-          </Routes>
+
+          <div className="p-2">
+            <Routes>
+              <Route path="/" element={<App />} />
+              <Route path="/acl/:tableId/:serverId" element={<Acl />} />
+              <Route path="/hello/:id" element={<Hello />} />
+              <Route path="/server" element={<Server />} />
+              <Route path="/client" element={<Client />} />
+            </Routes>
+          </div>
         </BrowserRouter>
       </WalletProvider>
     </React.StrictMode>

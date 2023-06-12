@@ -1,5 +1,6 @@
 import { useWallet, ConnectButton, ErrorCode } from "@suiet/wallet-kit";
 import { PackageLink } from "../utils";
+import "@suiet/wallet-kit/style.css";
 
 const Navbar = () => {
   const { chain } = useWallet();
