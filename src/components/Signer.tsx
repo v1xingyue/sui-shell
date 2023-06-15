@@ -1,12 +1,13 @@
 import { useWallet } from "@suiet/wallet-kit";
 import { fromSerializedSignature } from "@mysten/sui.js";
+import { toHEX, toB64 } from "@mysten/bcs";
 import { useState } from "react";
 
 const Signer = () => {
   const [result, updateResult] = useState({});
   const [verifyResult, updateVerifyResult] = useState(false);
   const wallet = useWallet();
-  const [message, updateMessage] = useState("hello world");
+  const [message, updateMessage] = useState("hello");
   const signerAction = async () => {
     try {
       const msgBytes = new TextEncoder().encode(message);
@@ -20,8 +21,8 @@ const Signer = () => {
         signatureScheme: signature.signatureScheme,
         pubKey: Buffer.from(signature.pubKey.toBytes()).toString("hex"),
         signatureRaw: signature.signature.toString(),
-        signature: Buffer.from(signature.signature).toString("hex"),
-        signatureB64: Buffer.from(signature.signature).toString("base64"),
+        signature: toHEX(signature.signature),
+        signatureB64: toB64(signature.signature),
         message: result.messageBytes,
       });
     } catch (e) {
