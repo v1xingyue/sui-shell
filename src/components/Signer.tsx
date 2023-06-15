@@ -19,7 +19,8 @@ const Signer = () => {
       console.log(signature);
       updateResult({
         signatureScheme: signature.signatureScheme,
-        pubKey: Buffer.from(signature.pubKey.toBytes()).toString("hex"),
+        walletSignature: result.signature,
+        pubKey: toHEX(signature.pubKey.toBytes()),
         signatureRaw: signature.signature.toString(),
         signature: toHEX(signature.signature),
         signatureB64: toB64(signature.signature),
