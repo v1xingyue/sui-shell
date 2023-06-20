@@ -61,7 +61,7 @@ const MyPool = () => {
         typeArguments: [coinType],
         arguments: [tx.gas, tx.pure(amount)],
       });
-      // console.log(tx);
+      console.log(tx);
       const result = await signAndExecuteTransactionBlock({
         transactionBlock: tx as any,
       });
@@ -70,9 +70,9 @@ const MyPool = () => {
   };
 
   const addCoinToPool = async (poolId: string) => {
-    const gasFeeCost = 10 ** 5;
     console.log(`operate address ${address} `);
     const tx = new TransactionBlock();
+    const gasFeeCost = 10 ** 5;
     const coins = tx.splitCoins(tx.gas, [tx.pure(gasFeeCost)]);
     tx.transferObjects([coins[0]], tx.pure(address as string));
     tx.moveCall({
@@ -106,8 +106,8 @@ const MyPool = () => {
     console.log(`you will do transfer as this list : ${transferInput}`);
 
     const transferItems = parseWalletData(transferInput);
-
     const tx = new TransactionBlock();
+    console.log(operatePool);
 
     transferItems.forEach((item) => {
       tx.moveCall({
@@ -116,7 +116,7 @@ const MyPool = () => {
         arguments: [
           tx.pure(item.amount),
           tx.pure(item.address),
-          tx.pure(operatePool.id as string),
+          tx.object(operatePool.id),
         ],
       });
     });
@@ -141,9 +141,7 @@ const MyPool = () => {
           <h3 className="font-bold text-lg">Transfer user details : </h3>
           <p className="py-4">each line for one transfer item. example : </p>
           <p className="py-4">
-            <b>
-              0x8bdb9075dd5bc3eba5bdde18163280ceb81adbe7761b513f40136d5e6b7bbc0f,123
-            </b>
+            <b>{address},100000</b>
           </p>
           <div>
             <textarea
